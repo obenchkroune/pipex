@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.c                                           :+:      :+:    :+:   */
+/*   errors_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 05:03:26 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/01/03 05:13:54 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/01/05 22:19:24 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 void	ft_put_errno(char *str)
 {
@@ -24,7 +24,9 @@ void	ft_put_error(char *str, char *str2)
 {
 	ft_putstr_fd("pipex: ", STDERR_FILENO);
 	ft_putstr_fd(str, STDERR_FILENO);
-	if (str2 != NULL)
+	if (!str2)
+		ft_putstr_fd("\n", STDERR_FILENO);
+	else
 		ft_putendl_fd(str2, STDERR_FILENO);
 }
 

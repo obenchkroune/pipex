@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/03 03:30:52 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/01/05 22:08:06 by obenchkr         ###   ########.fr       */
+/*   Created: 2024/01/05 22:03:36 by obenchkr          #+#    #+#             */
+/*   Updated: 2024/01/06 00:28:00 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
+#ifndef PIPEX_BONUS_H
 
-# define PIPEX_H
+# define PIPEX_BONUS_H
 
 # include "libft.h"
 # include <stdio.h>
 # include <errno.h>
 # include <string.h>
 # include <fcntl.h>
+# include <stdbool.h>
 
-# define PIPEX_USAGE "pipex: usage: ./pipex [infile] [cmd1] [cmd2] [outfile] \
-\nshould have the same behavior of \"< infile cmd1 | cmd2 > ourfile\""
+# define PIPEX_USAGE "pipex: usage: \
+./pipex [infile] [cmd1] [cmd2] ... [cmdn] [outfile]\
+\nshould have the same behavior of \
+\"< infile cmd1 | cmd2 | ... | cmdn > ourfile\"."
+# define PIPEX_HERE_DOC_USAGE "pipex: usage: \
+./pipex here_doc [LIMITER] [cmd1] [cmd2] [outfile]\
+\nshould have the same behavior of \"cmd1 << LIMITER | cmd2 >> outfile\"."
 # define PIPEX_NO_CMD "command not found: "
 
 typedef struct s_pipex
@@ -34,6 +40,8 @@ typedef struct s_pipex
 	int		fdd;
 	char	*in_file;
 	char	*out_file;
+	bool	here_doc;
+	char	*limiter;
 }	t_pipex;
 
 void	init_pipex(t_pipex **data, int ac, char **av, char **envp);
