@@ -1,5 +1,5 @@
 CC			=	gcc
-CFLAGS		=	-Wall -Werror -Wextra -Iinclude -fsanitize=address -g
+CFLAGS		=	-Wall -Werror -Wextra -Iinclude
 NAME		=	pipex
 
 SRC_FILES	=	cleanup.c errors.c main.c parsers.c utils.c
@@ -17,7 +17,7 @@ LIBS		=	-L./libft -lft
 all: $(NAME)
 
 bonus: $(LIBFT) $(BONUS_OBJ) ./include/pipex_bonus.h
-	$(CC) $(CFLAGS) $(BONUS_OBJ) -o $@ $(LIBS)
+	$(CC) $(CFLAGS) $(BONUS_OBJ) -o $(NAME) $(LIBS)
 
 .c.o:
 	$(CC) $(CFLAGS) -o $@ -c $<
