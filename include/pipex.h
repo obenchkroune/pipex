@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 03:30:52 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/01/05 22:08:06 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/01/06 01:52:56 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ typedef struct s_pipex
 }	t_pipex;
 
 void	init_pipex(t_pipex **data, int ac, char **av, char **envp);
-char	*get_bin_path(char *cmd, t_pipex *pipex);
+char	*get_exec_path(char *cmd, t_pipex *pipex);
 char	**parse_path(char **envp);
 char	***parse_commands(int ac, char **av);
-char	**parse_binaries(char ***commands, t_pipex *pipex);
+char	**parse_executables(char ***commands, t_pipex *pipex);
 void	cleanup_pipex(t_pipex *pipex);
 void	pipeline(t_pipex *pipex);
 void	ft_put_error(char *str, char *str2);

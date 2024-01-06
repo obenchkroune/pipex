@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 04:38:49 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/01/03 04:43:30 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/01/06 01:31:39 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	free_2d_array(char **arr)
 	size_t	i;
 
 	i = 0;
-	while (arr[i])
+	while (arr && arr[i])
 	{
 		free(arr[i]);
 		i++;
@@ -30,7 +30,7 @@ void	free_3d_array(char ***arr)
 	size_t	i;
 
 	i = 0;
-	while (arr[i])
+	while (arr && arr[i])
 	{
 		free_2d_array(arr[i]);
 		i++;

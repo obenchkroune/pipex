@@ -6,13 +6,13 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 04:37:12 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/01/05 22:19:20 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/01/06 01:52:56 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-char	**parse_binaries(char ***commands, t_pipex *pipex)
+char	**parse_executables(char ***commands, t_pipex *pipex)
 {
 	char	**bin_paths;
 	size_t	size;
@@ -27,7 +27,7 @@ char	**parse_binaries(char ***commands, t_pipex *pipex)
 	i = 0;
 	while (i < size)
 	{
-		bin_paths[i] = get_bin_path(commands[i][0], pipex);
+		bin_paths[i] = get_exec_path(commands[i][0], pipex);
 		i++;
 	}
 	bin_paths[i] = NULL;

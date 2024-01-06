@@ -6,13 +6,13 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 03:39:14 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/01/06 00:11:29 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/01/06 01:58:47 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-char	*get_bin_path(char *cmd, t_pipex *pipex)
+char	*get_exec_path(char *cmd, t_pipex *pipex)
 {
 	char	*bin_path;
 	size_t	i;
@@ -60,7 +60,7 @@ void	init_pipex(t_pipex **data, int ac, char **av, char **envp)
 	pipex->out_file = av[ac - 1];
 	pipex->envp = envp;
 	pipex->env_path = parse_path(envp);
-	pipex->cmds_path = parse_binaries(pipex->commands, pipex);
+	pipex->cmds_path = parse_executables(pipex->commands, pipex);
 	pipex->fdd = STDIN_FILENO;
 	*data = pipex;
 }
@@ -81,8 +81,8 @@ void	pipeline(t_pipex *pipex)
 			if (pipex->commands[i + 1] != NULL)
 				dup2(pipex->pipe_fds[1], STDOUT_FILENO);
 			close(pipex->pipe_fds[0]);
-			execve(pipex->cmds_path[i], pipex->commands[i], pipex->envp);
-			exit(EXIT_FAILURE);
+			if (execve(pipex->cmds_path[i], pipex->commands[i], pipex->envp) == -1)
+				exit(errno);
 		}
 		else
 		{
