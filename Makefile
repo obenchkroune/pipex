@@ -1,16 +1,17 @@
 CC			=	gcc
-CFLAGS		=	-Wall -Werror -Wextra -Iinclude -Ilibft -fsanitize=address -g
+CFLAGS		=	-Wall -Werror -Wextra -Iinclude -Ilibft
 NAME		=	pipex
 BONUS_NAME	=	.pipex_bonus
 
 SRC			=	./source/errors.c ./source/ft_dprintf.c ./source/main.c ./source/parsers.c ./source/parsers_utils.c ./source/pipeline.c ./source/utils.c
 OBJ			=	$(SRC:.c=.o)
 
-BONUS_SRC	=	$(shell find ./source/bonus -type f -name *.c)
+BONUS_SRC	=	./source/bonus/errors_bonus.c ./source/bonus/ft_dprintf_bonus.c ./source/bonus/get_next_line_bonus.c ./source/bonus/main_bonus.c ./source/bonus/parsers_bonus.c ./source/bonus/parsers_utils_bonus.c ./source/bonus/pipeline_bonus.c ./source/bonus/utils_bonus.c
 BONUS_OBJ	=	$(BONUS_SRC:.c=.o)
 
 LIBFT		=	libft/libft.a
 LIBS		=	-Llibft -lft
+
 
 all: $(NAME)
 
@@ -22,10 +23,10 @@ $(LIBFT):
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(NAME): $(OBJ) $(LIBFT) ./include/pipex.h
+$(NAME): $(OBJ) $(LIBFT)
 	$(CC) $(CFLAGS) $(OBJ) $(LIBS) -o $@
 
-$(BONUS_NAME): $(BONUS_OBJ) $(LIBFT) ./include/pipex_bonus.h
+$(BONUS_NAME): $(LIBFT) $(BONUS_OBJ)
 	@touch $(BONUS_NAME)
 	$(CC) $(CFLAGS) $(BONUS_OBJ) $(LIBS) -o $(NAME)
 
