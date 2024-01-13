@@ -9,9 +9,6 @@ LIBS		=	-Llibft -lft
 
 LIBFT		=	libft/libft.a
 
-default:
-	@echo $(SRC)
-
 all: $(NAME)
 
 $(LIBFT):
