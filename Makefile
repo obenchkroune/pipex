@@ -1,5 +1,5 @@
 CC			=	gcc
-CFLAGS		=	-Wall -Werror -Wextra -Iinclude -Ilibft
+CFLAGS		=	-Wall -Werror -Wextra -Iinclude -Ilibft -fsanitize=address -g
 NAME		=	pipex
 
 SRC			=	./source/errors.c ./source/ft_dprintf.c ./source/main.c ./source/parsers.c ./source/parsers_utils.c ./source/pipeline.c ./source/utils.c

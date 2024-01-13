@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 19:28:24 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/01/13 21:30:24 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/01/13 22:03:58 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ int	main(int ac, char **av, char **env)
 		return (1);
 	dup2(infile, 0);
 	close(infile);
+	pipeline(commands, env);
 	dup2(outfile, 1);
 	close(outfile);
-	pipeline(commands, env);
 	free_3d_tab(commands);
 	return (0);
 }

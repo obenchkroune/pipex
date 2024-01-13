@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 19:33:38 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/01/13 20:38:48 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/01/13 22:07:37 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ char	***parse_commands(int ac, char **av, char **env)
 		executable = get_command_executable(command_av[0], env);
 		if (!executable)
 		{
-			free_2d_tab(command_av);
-			return (NULL);
+			ft_dprintf(2, "pipex: command not found: %s\n", command_av[0]);
+			exit(EXIT_FAILURE);
 		}
 		commands[i++] = combine_exec_argv(executable, command_av);
 		free_2d_tab(command_av);

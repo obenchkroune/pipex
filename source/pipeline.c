@@ -6,18 +6,18 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 21:30:00 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/01/13 21:30:08 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/01/13 22:10:00 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static void	execute_command(int pipe_fd[2], char **command, char **env, int is_last)
+static void	execute_command(int pipe_fd[2], char **cmd, char **env, int is_last)
 {
 	if (!is_last)
 		dup2(pipe_fd[1], 1);
 	close_pipes(pipe_fd);
-	execve(command[0], &command[1], env);
+	execve(cmd[0], &cmd[1], env);
 	exit(1);
 }
 
