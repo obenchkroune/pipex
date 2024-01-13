@@ -1,41 +1,36 @@
 CC			=	gcc
-CFLAGS		=	-Wall -Werror -Wextra -Iinclude
+CFLAGS		=	-Wall -Werror -Wextra -Iinclude -Ilibft
 NAME		=	pipex
 
-SRC_FILES	=	cleanup.c errors.c main.c parsers.c utils.c
-BONUS_FILES	=	cleanup_bonus.c errors_bonus.c main_bonus.c parsers_bonus.c utils_bonus.c
-
-SRC			=	$(addprefix ./source/mandatory/, $(SRC_FILES))
+SRC			=	./source/errors.c ./source/ft_dprintf.c ./source/main.c ./source/parsers.c ./source/parsers_utils.c ./source/pipeline.c ./source/utils.c
 OBJ			=	$(SRC:.c=.o)
 
-BONUS_SRC	=	$(addprefix ./source/bonus/, $(BONUS_FILES))
-BONUS_OBJ	=	$(BONUS_SRC:.c=.o)
+LIBS		=	-Llibft -lft
 
 LIBFT		=	libft/libft.a
-LIBS		=	-L./libft -lft
+
+default:
+	@echo $(SRC)
 
 all: $(NAME)
-
-bonus: $(LIBFT) $(BONUS_OBJ) ./include/pipex_bonus.h
-	$(CC) $(CFLAGS) $(BONUS_OBJ) -o $(NAME) $(LIBS)
-
-.c.o:
-	$(CC) $(CFLAGS) -o $@ -c $<
 
 $(LIBFT):
 	make -C libft all
 
-$(NAME): $(OBJ) $(LIBFT) ./include/pipex.h
-	$(CC) $(CFLAGS) $(OBJ) -o $@ $(LIBS)
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(NAME): $(OBJ) $(LIBFT)
+	$(CC) $(CFLAGS) $(OBJ) $(LIBS) -o $@
 
 clean:
 	make -C libft clean
-	rm -f $(OBJ) $(BONUS_OBJ)
+	rm -rf $(OBJ)
 
 fclean: clean
 	make -C libft fclean
-	rm -f $(NAME) $(BONUS_NAME)
+	rm -rf $(NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean bonus re
+.PHONY: all clean fclean re

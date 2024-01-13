@@ -1,48 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleanup_bonus.c                                    :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/03 04:38:49 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/01/06 01:31:48 by obenchkr         ###   ########.fr       */
+/*   Created: 2024/01/13 20:03:21 by obenchkr          #+#    #+#             */
+/*   Updated: 2024/01/13 21:30:28 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "pipex.h"
 
-void	free_2d_array(char **arr)
+size_t	ft_tabsize(char **tab)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
-	while (arr && arr[i])
-	{
-		free(arr[i]);
+	while (tab[i])
 		i++;
-	}
-	free(arr);
+	return (i);
 }
 
-void	free_3d_array(char ***arr)
+void	free_2d_tab(char **tab)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
-	while (arr && arr[i])
-	{
-		free_2d_array(arr[i]);
-		i++;
-	}
-	free(arr);
+	while (tab[i])
+		free(tab[i++]);
+	free(tab);
 }
 
-void	cleanup_pipex(t_pipex *pipex)
+void	free_3d_tab(char ***tab)
 {
-	free_2d_array(pipex->cmds_path);
-	free_2d_array(pipex->env_path);
-	free_3d_array(pipex->commands);
-	free(pipex->limiter);
-	free(pipex);
+	int	i;
+
+	i = 0;
+	while (tab[i])
+		free_2d_tab(tab[i++]);
+	free(tab);
+}
+
+void	close_pipes(int fd[2])
+{
+	close(fd[0]);
+	close(fd[1]);
 }

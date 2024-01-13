@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/03 03:30:52 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/01/06 01:52:56 by obenchkr         ###   ########.fr       */
+/*   Created: 2024/01/13 19:27:49 by obenchkr          #+#    #+#             */
+/*   Updated: 2024/01/13 21:30:35 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,37 +14,24 @@
 
 # define PIPEX_H
 
+# define PIPEX_USAGE "pipex: usage: ./pipex [infile] [cmd1] [cmd2] [outfile]\n"
+
 # include "libft.h"
-# include <stdio.h>
-# include <errno.h>
+# include <sys/wait.h>
+# include <sys/fcntl.h>
+# include <stdarg.h>
 # include <string.h>
-# include <fcntl.h>
+# include <errno.h>
 
-# define PIPEX_USAGE "pipex: usage: ./pipex [infile] [cmd1] [cmd2] [outfile] \
-\nshould have the same behavior of \"< infile cmd1 | cmd2 > ourfile\""
-# define PIPEX_NO_CMD "command not found: "
-
-typedef struct s_pipex
-{
-	char	**envp;
-	char	**env_path;
-	char	***commands;
-	char	**cmds_path;
-	int		pipe_fds[2];
-	int		fdd;
-	char	*in_file;
-	char	*out_file;
-}	t_pipex;
-
-void	init_pipex(t_pipex **data, int ac, char **av, char **envp);
-char	*get_exec_path(char *cmd, t_pipex *pipex);
-char	**parse_path(char **envp);
-char	***parse_commands(int ac, char **av);
-char	**parse_executables(char ***commands, t_pipex *pipex);
-void	cleanup_pipex(t_pipex *pipex);
-void	pipeline(t_pipex *pipex);
-void	ft_put_error(char *str, char *str2);
-void	ft_put_errno(char *str);
-void	clean_exit(t_pipex *pipex);
+void	close_pipes(int fd[2]);
+void	pipeline(char ***commands, char **env);
+void	ft_dprintf(int fd, const char *format, ...);
+int		check_fd(int fd, char *file_name);
+char	**parse_env_path(char **env);
+char	***parse_commands(int ac, char **av, char **env);
+char	*get_command_executable(char *cmd, char **env);
+size_t	ft_tabsize(char **tab);
+void	free_2d_tab(char **tab);
+void	free_3d_tab(char ***tab);
 
 #endif

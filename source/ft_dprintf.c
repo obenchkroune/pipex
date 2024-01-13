@@ -1,47 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleanup.c                                          :+:      :+:    :+:   */
+/*   ft_dprintf.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/03 04:38:49 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/01/06 01:31:39 by obenchkr         ###   ########.fr       */
+/*   Created: 2024/01/13 20:53:38 by obenchkr          #+#    #+#             */
+/*   Updated: 2024/01/13 21:00:20 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	free_2d_array(char **arr)
+void	ft_dprintf(int fd, const char *format, ...)
 {
-	size_t	i;
+	va_list	args;
 
-	i = 0;
-	while (arr && arr[i])
+	va_start(args, format);
+	while (*format)
 	{
-		free(arr[i]);
-		i++;
+		if (*format == '%' && *(format + 1) == 's')
+		{
+			ft_putstr_fd(va_arg(args, char *), fd);
+			format += 2;
+		}
+		else
+		{
+			ft_putchar_fd(*format, fd);
+			format++;
+		}
 	}
-	free(arr);
-}
-
-void	free_3d_array(char ***arr)
-{
-	size_t	i;
-
-	i = 0;
-	while (arr && arr[i])
-	{
-		free_2d_array(arr[i]);
-		i++;
-	}
-	free(arr);
-}
-
-void	cleanup_pipex(t_pipex *pipex)
-{
-	free_2d_array(pipex->cmds_path);
-	free_2d_array(pipex->env_path);
-	free_3d_array(pipex->commands);
-	free(pipex);
+	va_end(args);
 }
