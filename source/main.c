@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 19:28:24 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/01/13 22:03:58 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/01/13 23:02:55 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,11 @@ int	main(int ac, char **av, char **env)
 	outfile = check_fd(
 			open(av[ac - 1], O_TRUNC | O_CREAT | O_WRONLY, 0664), av[ac - 1]);
 	commands = parse_commands(ac, av, env);
-	if (!commands)
-		return (1);
 	dup2(infile, 0);
 	close(infile);
-	pipeline(commands, env);
 	dup2(outfile, 1);
 	close(outfile);
+	pipeline(commands, env);
 	free_3d_tab(commands);
 	return (0);
 }

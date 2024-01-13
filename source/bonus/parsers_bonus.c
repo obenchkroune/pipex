@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsers.c                                          :+:      :+:    :+:   */
+/*   parsers_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 19:33:38 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/01/13 23:03:04 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/01/13 22:58:06 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 char	**parse_env_path(char **env)
 {
@@ -54,7 +54,6 @@ char	***parse_commands(int ac, char **av, char **env)
 	commands = malloc(sizeof(char **) * (ac - 2));
 	if (!commands)
 		exit(EXIT_FAILURE);
-	ft_bzero(commands, sizeof(char **) * (ac - 2));
 	i = 0;
 	while (i + 3 < ac)
 	{
