@@ -1,6 +1,7 @@
 CC			=	gcc
 CFLAGS		=	-Wall -Werror -Wextra -Iinclude -Ilibft -fsanitize=address -g
 NAME		=	pipex
+BONUS_NAME	=	.pipex_bonus
 
 SRC			=	./source/errors.c ./source/ft_dprintf.c ./source/main.c ./source/parsers.c ./source/parsers_utils.c ./source/pipeline.c ./source/utils.c
 OBJ			=	$(SRC:.c=.o)
@@ -13,6 +14,8 @@ LIBS		=	-Llibft -lft
 
 all: $(NAME)
 
+bonus: $(BONUS_NAME)
+
 $(LIBFT):
 	make -C libft all
 
@@ -22,7 +25,8 @@ $(LIBFT):
 $(NAME): $(OBJ) $(LIBFT) ./include/pipex.h
 	$(CC) $(CFLAGS) $(OBJ) $(LIBS) -o $@
 
-bonus: $(BONUS_OBJ) $(LIBFT) ./include/pipex_bonus.h
+$(BONUS_NAME): $(BONUS_OBJ) $(LIBFT) ./include/pipex_bonus.h
+	@touch $(BONUS_NAME)
 	$(CC) $(CFLAGS) $(BONUS_OBJ) $(LIBS) -o $(NAME)
 
 clean:
@@ -31,8 +35,8 @@ clean:
 
 fclean: clean
 	make -C libft fclean
-	rm -rf $(NAME)
+	rm -rf $(NAME) $(BONUS_NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean re bonus $(NAME)
+.PHONY: all clean fclean re bonus
