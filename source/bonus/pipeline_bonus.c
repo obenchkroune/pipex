@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 21:30:00 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/01/13 22:17:11 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/01/14 02:22:18 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	execute_command(int pipe_fd[2], char **cmd, char **env, int is_last)
 		dup2(pipe_fd[1], 1);
 	close_pipes(pipe_fd);
 	execve(cmd[0], &cmd[1], env);
-	exit(1);
+	exit(EXIT_FAILURE);
 }
 
 static void	wait_for_command(int pipe_fd[2], int *fd_ptr, int is_last)
@@ -28,6 +28,13 @@ static void	wait_for_command(int pipe_fd[2], int *fd_ptr, int is_last)
 	close(pipe_fd[1]);
 	if (is_last)
 		close(pipe_fd[0]);
+}
+
+static void	ft_error(char ***commands)
+{
+	ft_dprintf(2, "pipex: %s\n", strerror(errno));
+	free_3d_tab(commands);
+	exit(errno);
 }
 
 void	pipeline(char ***commands, char **env)
@@ -40,7 +47,7 @@ void	pipeline(char ***commands, char **env)
 	while (*commands)
 	{
 		if (pipe(pipe_fd) < 0)
-			return ;
+			ft_error(commands);
 		pid = fork();
 		if (pid == 0)
 		{
@@ -54,5 +61,7 @@ void	pipeline(char ***commands, char **env)
 			wait_for_command(pipe_fd, &fd, !*(commands + 1));
 			commands++;
 		}
+		else
+			ft_error(commands);
 	}
 }
