@@ -6,28 +6,34 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 21:30:00 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/01/14 02:20:49 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/01/14 02:38:46 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static void	execute_command(int pipe_fd[2], char **cmd, char **env, int is_last)
+static void \
+	execute_command(t_pipeline pipeline, char **cmd, char **env, int is_last)
 {
+	if (pipeline.fd != -1)
+	{
+		dup2(pipeline.fd, 0);
+		close(pipeline.fd);
+	}
 	if (!is_last)
-		dup2(pipe_fd[1], 1);
-	close_pipes(pipe_fd);
+		dup2(pipeline.pipe_fds[1], 1);
+	close_pipes(pipeline.pipe_fds);
 	execve(cmd[0], &cmd[1], env);
 	exit(EXIT_FAILURE);
 }
 
-static void	wait_for_command(int pipe_fd[2], int *fd_ptr, int is_last)
+static void	wait_for_command(t_pipeline *pipeline, int is_last)
 {
 	wait(NULL);
-	*fd_ptr = pipe_fd[0];
-	close(pipe_fd[1]);
+	pipeline->fd = pipeline->pipe_fds[0];
+	close(pipeline->pipe_fds[1]);
 	if (is_last)
-		close(pipe_fd[0]);
+		close(pipeline->pipe_fds[0]);
 }
 
 static void	ft_error(char ***commands)
@@ -39,26 +45,20 @@ static void	ft_error(char ***commands)
 
 void	pipeline(char ***commands, char **env)
 {
-	int		pipe_fd[2];
-	pid_t	pid;
-	int		fd;
+	t_pipeline	pipeline;
+	pid_t		pid;
 
-	fd = -1;
+	pipeline.fd = -1;
 	while (*commands)
 	{
-		if (pipe(pipe_fd) < 0)
+		if (pipe(pipeline.pipe_fds) < 0)
 			ft_error(commands);
 		pid = fork();
 		if (pid == 0)
-		{
-			if (fd != -1)
-				dup2(fd, 0);
-			close(fd);
-			execute_command(pipe_fd, *commands, env, !*(commands + 1));
-		}
+			execute_command(pipeline, *commands, env, !*(commands + 1));
 		else if (pid > 0)
 		{
-			wait_for_command(pipe_fd, &fd, !*(commands + 1));
+			wait_for_command(&pipeline, !*(commands + 1));
 			commands++;
 		}
 		else

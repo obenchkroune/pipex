@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 19:27:49 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/01/13 21:30:35 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/01/14 02:30:55 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,12 @@
 # include <stdarg.h>
 # include <string.h>
 # include <errno.h>
+
+typedef struct s_pipeline
+{
+	int	pipe_fds[2];
+	int	fd;
+}	t_pipeline;
 
 void	close_pipes(int fd[2]);
 void	pipeline(char ***commands, char **env);
