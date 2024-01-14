@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 19:27:49 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/01/14 02:30:55 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/01/14 23:47:20 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <stdarg.h>
 # include <string.h>
 # include <errno.h>
+# include <stdio.h>
 
 typedef struct s_pipeline
 {
@@ -39,5 +40,9 @@ char	*get_command_executable(char *cmd, char **env);
 size_t	ft_tabsize(char **tab);
 void	free_2d_tab(char **tab);
 void	free_3d_tab(char ***tab);
+char	**get_av(char *cmd);
+char	*get_next_av(char *cmd);
+int		get_next_idx(char *cmd);
+int		get_av_size(char *cmd);
 
 #endif

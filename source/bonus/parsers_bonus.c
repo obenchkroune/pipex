@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 19:33:38 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/01/14 02:22:41 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/01/14 23:54:05 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char	***parse_commands(int ac, char **av, char **env)
 	i = 0;
 	while (i + 3 < ac)
 	{
-		command_av = ft_split(av[i + 2], ' ');
+		command_av = get_av(av[i + 2]);
 		executable = get_command_executable(command_av[0], env);
 		if (!executable)
 			handle_executable_error(command_av, commands);
