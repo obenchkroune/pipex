@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 21:30:00 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/01/14 02:38:46 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/01/15 19:44:14 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void \
 		dup2(pipeline.pipe_fds[1], 1);
 	close_pipes(pipeline.pipe_fds);
 	execve(cmd[0], &cmd[1], env);
-	exit(EXIT_FAILURE);
+	exit(errno);
 }
 
 static void	wait_for_command(t_pipeline *pipeline, int is_last)

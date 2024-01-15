@@ -1,5 +1,5 @@
 CC			=	gcc
-CFLAGS		=	-Wall -Werror -Wextra -Iinclude -Ilibft -fsanitize=address -g
+CFLAGS		=	-Wall -Werror -Wextra -Iinclude -Ilibft
 NAME		=	pipex
 BONUS_NAME	=	pipex_bonus
 

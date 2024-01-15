@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 19:33:38 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/01/14 23:54:05 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/01/15 19:44:40 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	handle_executable_error(char **cmd_av, char ***cmds)
 	ft_dprintf(2, "pipex: command not found: %s\n", cmd_av[0]);
 	free_2d_tab(cmd_av);
 	free_3d_tab(cmds);
-	exit(EXIT_FAILURE);
+	exit(errno);
 }
 
 static void	handle_cmd_error(char ***commands)

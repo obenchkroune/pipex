@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 22:11:18 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/01/14 23:59:39 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/01/15 19:44:34 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	handle_here_doc(char *limiter)
 	if (pipe(pipe_fd) < 0)
 	{
 		perror("pipe");
-		exit(EXIT_FAILURE);
+		exit(errno);
 	}
 	limiter = ft_strjoin(limiter, "\n");
 	while (1)
@@ -42,6 +42,12 @@ void	handle_here_doc(char *limiter)
 void	redirect_input(int fd)
 {
 	dup2(fd, 0);
+	close(fd);
+}
+
+void	redirect_output(int fd)
+{
+	dup2(fd, 1);
 	close(fd);
 }
 
@@ -68,7 +74,7 @@ int	main(int ac, char **av, char **env)
 		o_flags |= O_TRUNC;
 	}
 	outfile = check_fd(open(av[ac - 1], o_flags, 0664), av[ac - 1]);
-	dup2(outfile, 1);
+	redirect_output(outfile);
 	pipeline(commands, env);
 	free_3d_tab(commands);
 	return (0);

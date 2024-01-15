@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_av.c                                           :+:      :+:    :+:   */
+/*   get_av_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 23:48:14 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/01/14 23:52:52 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/01/15 19:44:29 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	**get_av(char *cmd)
 	if (size == -1)
 	{
 		ft_dprintf(2, "pipex: invalid command: %s\n", cmd);
-		exit(EXIT_FAILURE);
+		exit(errno);
 	}
 	result = malloc((size + 1) * sizeof(char *));
 	if (!result)
