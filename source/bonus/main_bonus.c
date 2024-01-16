@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 22:11:18 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/01/16 22:27:21 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/01/16 22:34:26 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 
 void	redirect_input(int fd, char ***commands)
 {
-	check_dup2(dup2(fd, 0), commands);
-	close(fd);
+	if (fd != 0)
+	{
+		check_dup2(dup2(fd, 0), commands);
+		close(fd);
+	}
 }
 
 void	redirect_output(int fd, char ***commands)
