@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 22:11:29 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/01/14 23:55:22 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/01/16 22:10:05 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_pipeline
 	int	fd;
 }	t_pipeline;
 
+int		check_dup2(int fd, char ***commands);
 char	*get_next_line(int fd);
 void	close_pipes(int fd[2]);
 void	check_errors(int ac, char **av);

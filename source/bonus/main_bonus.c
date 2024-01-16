@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 22:11:18 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/01/15 19:44:34 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/01/16 22:07:59 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	handle_here_doc(char *limiter)
 	limiter = ft_strjoin(limiter, "\n");
 	while (1)
 	{
+		ft_putstr_fd("pipe heredoc> ", 1);
 		line = get_next_line(0);
 		if (!line || strncmp(limiter, line, ft_strlen(limiter)) == 0)
 		{
@@ -39,15 +40,15 @@ void	handle_here_doc(char *limiter)
 	close_pipes(pipe_fd);
 }
 
-void	redirect_input(int fd)
+void	redirect_input(int fd, char ***commands)
 {
-	dup2(fd, 0);
+	check_dup2(dup2(fd, 0), commands);
 	close(fd);
 }
 
-void	redirect_output(int fd)
+void	redirect_output(int fd, char ***commands)
 {
-	dup2(fd, 1);
+	check_dup2(dup2(fd, 1), commands);
 	close(fd);
 }
 
@@ -69,12 +70,12 @@ int	main(int ac, char **av, char **env)
 	else
 	{
 		infile = check_fd(open(av[1], O_RDONLY), av[1]);
-		redirect_input(infile);
 		commands = parse_commands(ac, av, env);
+		redirect_input(infile, commands);
 		o_flags |= O_TRUNC;
 	}
 	outfile = check_fd(open(av[ac - 1], o_flags, 0664), av[ac - 1]);
-	redirect_output(outfile);
+	redirect_output(outfile, commands);
 	pipeline(commands, env);
 	free_3d_tab(commands);
 	return (0);
