@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 20:51:05 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/01/16 22:01:36 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/01/16 22:21:11 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	check_dup2(int fd, char ***commands)
 	if (fd < 0)
 	{
 		free_3d_tab(commands);
-		exit(errno);
+		exit(EXIT_FAILURE);
 	}
 	return (fd);
 }

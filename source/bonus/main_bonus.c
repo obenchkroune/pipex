@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 22:11:18 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/01/16 22:17:46 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/01/16 22:27:21 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,17 @@ int	main(int ac, char **av, char **env)
 	if (ft_strncmp(av[1], "here_doc", 9) == 0)
 	{
 		commands = parse_commands(ac - 1, &av[1], env);
-		handle_here_doc(av[2], commands);
+		handle_here_doc(av[2], commands, &infile);
 		o_flags |= O_APPEND;
 	}
 	else
 	{
 		infile = check_fd(open(av[1], O_RDONLY), av[1]);
 		commands = parse_commands(ac, av, env);
-		redirect_input(infile, commands);
 		o_flags |= O_TRUNC;
 	}
 	outfile = check_fd(open(av[ac - 1], o_flags, 0664), av[ac - 1]);
+	redirect_input(infile, commands);
 	redirect_output(outfile, commands);
 	pipeline(commands, env);
 	free_3d_tab(commands);

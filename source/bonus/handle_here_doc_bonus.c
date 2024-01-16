@@ -6,13 +6,13 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 22:13:17 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/01/16 22:14:44 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/01/16 22:27:07 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-void	handle_here_doc(char *limiter, char **commands)
+void	handle_here_doc(char *limiter, char ***commands, int *infile_fd)
 {
 	char	*line;
 	int		pipe_fd[2];
@@ -22,6 +22,7 @@ void	handle_here_doc(char *limiter, char **commands)
 		perror("pipe");
 		exit(errno);
 	}
+	*infile_fd = 0;
 	limiter = ft_strjoin(limiter, "\n");
 	while (1)
 	{
