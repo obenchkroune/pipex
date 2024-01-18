@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 19:27:49 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/01/16 22:01:52 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/01/18 11:39:53 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@
 # define PIPEX_USAGE "pipex: usage: ./pipex [infile] [cmd1] [cmd2] [outfile]\n"
 
 # include "libft.h"
+# include <stdarg.h>
 # include <sys/wait.h>
 # include <sys/fcntl.h>
-# include <stdarg.h>
 # include <string.h>
 # include <errno.h>
 # include <stdio.h>
+# include <stdbool.h>
 
 typedef struct s_pipeline
 {
@@ -30,6 +31,7 @@ typedef struct s_pipeline
 	int	fd;
 }	t_pipeline;
 
+void	check_errors(int ac, char **av);
 void	close_pipes(int fd[2]);
 void	pipeline(char ***commands, char **env);
 void	ft_dprintf(int fd, const char *format, ...);

@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 22:11:29 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/01/16 22:27:18 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/01/18 12:43:52 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <string.h>
 # include <errno.h>
 # include <stdio.h>
+# include <stdbool.h>
 
 typedef struct s_pipeline
 {

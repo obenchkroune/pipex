@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 19:37:23 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/01/14 23:47:41 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/01/18 11:58:47 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ char	*get_command_executable(char *cmd, char **env)
 	char	**env_path;
 	char	*result;
 	int		i;
-
+	
+	if (ft_strncmp(cmd, "./", 2) == 0 || ft_strncmp(cmd, "/", 1) == 0)
+		return (ft_strdup(cmd));
 	result = NULL;
 	env_path = parse_env_path(env);
 	if (!env_path)
@@ -27,7 +29,7 @@ char	*get_command_executable(char *cmd, char **env)
 	while (env_path[i])
 	{
 		result = ft_strjoin(env_path[i++], cmd);
-		if (access(result, X_OK | F_OK) == 0)
+		if (access(result, F_OK) == 0)
 			break ;
 		free(result);
 		result = NULL;
@@ -37,7 +39,7 @@ char	*get_command_executable(char *cmd, char **env)
 	return (result);
 }
 
-int	ft_isspace(char c)
+static int	ft_isspace(char c)
 {
 	return (c == ' ' || (c >= 9 && c <= 13));
 }

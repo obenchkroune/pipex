@@ -1,7 +1,9 @@
-CC			=	gcc
-CFLAGS		=	-Wall -Werror -Wextra -Iinclude -Ilibft
 NAME		=	pipex
 BONUS_NAME	=	pipex_bonus
+
+CC			=	gcc
+CFLAGS		=	-Wall -Werror -Wextra -Iinclude -Ilibft
+CLIBS		=	-Llibft -lft
 
 SRC			=	./source/errors.c ./source/ft_dprintf.c ./source/get_av.c ./source/main.c ./source/parsers.c ./source/parsers_utils.c ./source/pipeline.c ./source/utils.c
 OBJ			=	$(SRC:.c=.o)
@@ -10,7 +12,6 @@ BONUS_SRC	=	./source/bonus/errors_bonus.c ./source/bonus/ft_dprintf_bonus.c ./so
 BONUS_OBJ	=	$(BONUS_SRC:.c=.o)
 
 LIBFT		=	libft/libft.a
-LIBS		=	-Llibft -lft
 
 
 all: $(NAME)
@@ -24,10 +25,10 @@ $(LIBFT):
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJ) $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJ) $(LIBS) -o $@
+	$(CC) $(CFLAGS) $(OBJ) $(CLIBS) -o $@
 
 $(BONUS_NAME): $(LIBFT) $(BONUS_OBJ)
-	$(CC) $(CFLAGS) $(BONUS_OBJ) $(LIBS) -o $(BONUS_NAME)
+	$(CC) $(CFLAGS) $(BONUS_OBJ) $(CLIBS) -o $(BONUS_NAME)
 
 clean:
 	make -C libft clean
@@ -40,3 +41,4 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re bonus
+.SECONDARY: $(OBJ) $(BONUS_OBJ)
