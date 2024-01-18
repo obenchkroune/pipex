@@ -2,7 +2,7 @@ NAME		=	pipex
 BONUS_NAME	=	pipex_bonus
 
 CC			=	gcc
-CFLAGS		=	-Wall -Werror -Wextra -Iinclude -Ilibft
+CFLAGS		=	-Wall -Werror -Wextra -Iinclude -Ilibft -g -fsanitize=address
 CLIBS		=	-Llibft -lft
 
 SRC			=	./source/errors.c ./source/ft_dprintf.c ./source/get_av.c ./source/main.c ./source/parsers.c ./source/parsers_utils.c ./source/pipeline.c ./source/utils.c

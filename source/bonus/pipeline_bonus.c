@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 21:30:00 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/01/18 12:43:31 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/01/18 13:41:59 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@ static void \
 	execute_command(t_pipeline pipeline, char **cmd, char **env, bool is_last)
 {
 	if (access(cmd[0], X_OK) != 0)
+	{
+		ft_dprintf(2, "%s\n", strerror(errno));
 		exit(errno);
+	}
 	if (pipeline.fd != -1)
 	{
 		dup2(pipeline.fd, 0);
@@ -32,20 +35,49 @@ static void \
 	exit(EXIT_FAILURE);
 }
 
+static void	update_pipeline(t_pipeline *pipeline, bool is_last)
+{
+	close(pipeline->pipe_fds[1]);
+	if (pipeline->fd != -1)
+		close(pipeline->fd);
+	pipeline->fd = pipeline->pipe_fds[0];
+	if (is_last)
+		close(pipeline->pipe_fds[0]);
+}
+
 static void	ft_error(char ***commands)
 {
 	ft_dprintf(2, "pipex: %s\n", strerror(errno));
 	free_3d_tab(commands);
-	exit(errno);
+	exit(EXIT_FAILURE);
+}
+
+static void	wait_for_childs(char ***commands)
+{
+	pid_t	pid;
+	int		wstatus;
+
+	pid = 1;
+	while (pid > 0)
+	{
+		pid = wait(&wstatus);
+		if (WEXITSTATUS(wstatus) == EXIT_FAILURE)
+		{
+			free_3d_tab(commands);
+			exit(EXIT_FAILURE);
+		}
+	}
 }
 
 void	pipeline(char ***commands, char **env)
 {
 	t_pipeline	pipeline;
 	pid_t		pid;
+	int			i;
 
 	pipeline.fd = -1;
-	while (*commands)
+	i = 0;
+	while (commands[i])
 	{
 		if (pipe(pipeline.pipe_fds) < 0)
 			ft_error(commands);
@@ -53,14 +85,10 @@ void	pipeline(char ***commands, char **env)
 		if (pid < 0)
 			ft_error(commands);
 		else if (pid == 0)
-			execute_command(pipeline, *commands, env, !*(commands + 1));
-		close(pipeline.pipe_fds[1]);
-		if (pipeline.fd != -1)
-			close(pipeline.fd);
-		pipeline.fd = pipeline.pipe_fds[0];
-		if (*(commands + 1) == NULL)
-			close(pipeline.pipe_fds[0]);
-		commands++;
+			execute_command(pipeline, commands[i], env, !commands[i + 1]);
+		else
+			update_pipeline(&pipeline, commands[i + 1] == NULL);
+		i++;
 	}
-	wait(NULL);
+	wait_for_childs(commands);
 }
