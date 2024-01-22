@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 19:33:38 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/01/15 19:44:40 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/01/22 09:01:26 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,6 @@ void	handle_executable_error(char **cmd_av, char ***cmds)
 	exit(errno);
 }
 
-static void	handle_cmd_error(char ***commands)
-{
-	ft_dprintf(2, "pipex: %s\n", strerror(errno));
-	free(commands);
-	exit(errno);
-}
-
 char	***parse_commands(int ac, char **av, char **env)
 {
 	int		i;
@@ -81,13 +74,9 @@ char	***parse_commands(int ac, char **av, char **env)
 	{
 		command_av = get_av(av[i + 2]);
 		executable = get_command_executable(command_av[0], env);
-		if (!executable)
-			handle_executable_error(command_av, commands);
 		commands[i] = combine_exec_argv(executable, command_av);
 		free_2d_tab(command_av);
 		free(executable);
-		if (!commands[i])
-			handle_cmd_error(commands);
 		i++;
 	}
 	commands[i] = NULL;

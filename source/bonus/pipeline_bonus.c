@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 21:30:00 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/01/18 13:41:59 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/01/22 09:09:33 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void \
 {
 	if (access(cmd[0], X_OK) != 0)
 	{
-		ft_dprintf(2, "%s\n", strerror(errno));
+		ft_dprintf(2, "pipex: command not found: %s\n", cmd[1]);
 		exit(errno);
 	}
 	if (pipeline.fd != -1)
@@ -31,8 +31,8 @@ static void \
 		close(pipeline.pipe_fds[1]);
 	}
 	close_pipes(pipeline.pipe_fds);
-	execve(cmd[0], &cmd[1], env);
-	exit(EXIT_FAILURE);
+	if (execve(cmd[0], &cmd[1], env) == -1)
+		exit(errno);
 }
 
 static void	update_pipeline(t_pipeline *pipeline, bool is_last)
@@ -57,16 +57,13 @@ static void	wait_for_childs(char ***commands)
 	pid_t	pid;
 	int		wstatus;
 
-	pid = 1;
+	pid = wait(&wstatus);
 	while (pid > 0)
 	{
 		pid = wait(&wstatus);
-		if (WEXITSTATUS(wstatus) == EXIT_FAILURE)
-		{
-			free_3d_tab(commands);
-			exit(EXIT_FAILURE);
-		}
 	}
+	free_3d_tab(commands);
+	exit(WEXITSTATUS(wstatus));
 }
 
 void	pipeline(char ***commands, char **env)
