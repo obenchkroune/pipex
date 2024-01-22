@@ -23,7 +23,7 @@ $(NAME): $(OBJ)
 
 $(BONUS_NAME): $(BONUS_OBJ)
 	make -C libft all
-	$(CC) $(CFLAGS) $(BONUS_OBJ) $(CLIBS) -o $(NAME)
+	$(CC) $(CFLAGS) $(BONUS_OBJ) $(CLIBS) -o $(BONUS_NAME)
 
 clean:
 	make -C libft clean
