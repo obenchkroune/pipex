@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 11:57:29 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/01/22 12:52:09 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/01/22 14:30:22 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,13 @@ static void	update_pipeline(t_pipeline *pipeline, int is_last)
 {
 	close(pipeline->input_fd);
 	close(pipeline->pipe_fd[1]);
-	pipeline->input_fd = pipeline->pipe_fd[0];
 	if (is_last)
+	{
 		close(pipeline->pipe_fd[0]);
+		close(pipeline->output_fd);
+	}
+	else
+		pipeline->input_fd = pipeline->pipe_fd[0];
 }
 
 int	pipeline(int in_fd, int out_fd, char ***commands, char **env)
@@ -72,6 +76,7 @@ int	pipeline(int in_fd, int out_fd, char ***commands, char **env)
 		update_pipeline(&pipeline, commands[i + 1] == NULL);
 		i++;
 	}
-	waitpid(pid, &wstatus, 0);
+	while (wait(&wstatus) > 0)
+		;
 	return (WEXITSTATUS(wstatus));
 }
