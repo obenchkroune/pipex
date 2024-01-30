@@ -1,0 +1,130 @@
+[
+ {
+  "directory": "/home/oussama/Desktop/pipex",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Iinclude",
+   "-Ilibft",
+   "-c",
+   "src/mandatory/cleanup.c",
+   "-o",
+   "src/mandatory/cleanup.o"
+  ],
+  "file": "src/mandatory/cleanup.c"
+ },
+ {
+  "directory": "/home/oussama/Desktop/pipex",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Iinclude",
+   "-Ilibft",
+   "-c",
+   "src/mandatory/errors.c",
+   "-o",
+   "src/mandatory/errors.o"
+  ],
+  "file": "src/mandatory/errors.c"
+ },
+ {
+  "directory": "/home/oussama/Desktop/pipex",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Iinclude",
+   "-Ilibft",
+   "-c",
+   "src/mandatory/ft_dprintf.c",
+   "-o",
+   "src/mandatory/ft_dprintf.o"
+  ],
+  "file": "src/mandatory/ft_dprintf.c"
+ },
+ {
+  "directory": "/home/oussama/Desktop/pipex",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Iinclude",
+   "-Ilibft",
+   "-c",
+   "src/mandatory/pipex.c",
+   "-o",
+   "src/mandatory/pipex.o"
+  ],
+  "file": "src/mandatory/pipex.c"
+ },
+ {
+  "directory": "/home/oussama/Desktop/pipex",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Iinclude",
+   "-Ilibft",
+   "-c",
+   "src/mandatory/parsers.c",
+   "-o",
+   "src/mandatory/parsers.o"
+  ],
+  "file": "src/mandatory/parsers.c"
+ },
+ {
+  "directory": "/home/oussama/Desktop/pipex",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Iinclude",
+   "-Ilibft",
+   "-c",
+   "src/mandatory/parsers_utils.c",
+   "-o",
+   "src/mandatory/parsers_utils.o"
+  ],
+  "file": "src/mandatory/parsers_utils.c"
+ },
+ {
+  "directory": "/home/oussama/Desktop/pipex",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Iinclude",
+   "-Ilibft",
+   "-c",
+   "src/mandatory/pipeline.c",
+   "-o",
+   "src/mandatory/pipeline.o"
+  ],
+  "file": "src/mandatory/pipeline.c"
+ },
+ {
+  "directory": "/home/oussama/Desktop/pipex",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Iinclude",
+   "-Ilibft",
+   "-c",
+   "src/mandatory/utils.c",
+   "-o",
+   "src/mandatory/utils.o"
+  ],
+  "file": "src/mandatory/utils.c"
+ }
+]

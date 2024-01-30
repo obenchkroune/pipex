@@ -6,18 +6,18 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 11:57:29 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/01/22 12:56:33 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/01/31 00:23:51 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
 static void \
-	execute_command(t_pipeline pipeline, char **cmd, char **env, int is_last)
+	execute_command(t_pipeline pipeline, char ***cmd, char **env, int i)
 {
 	if (pipeline.input_fd == -1)
 		exit(ENOENT);
-	if (is_last)
+	if (!cmd[i + 1])
 	{
 		dup2(pipeline.output_fd, 1);
 		close(pipeline.output_fd);
@@ -26,17 +26,20 @@ static void \
 	{
 		dup2(pipeline.pipe_fd[1], 1);
 		close(pipeline.pipe_fd[1]);
+		close(pipeline.pipe_fd[0]);
 	}
 	dup2(pipeline.input_fd, 0);
 	close(pipeline.input_fd);
-	if (access(cmd[0], X_OK) == 0)
+	if (access(cmd[i][0], X_OK) == 0)
 	{
-		execve(cmd[0], cmd + 1, env);
+		execve(cmd[i][0], cmd[i] + 1, env);
+		free_3d_tab(cmd);
 		exit(errno);
 	}
 	else
 	{
 		ft_dprintf(2, "pipex: command not found: %s\n", cmd[0]);
+		free_3d_tab(cmd);
 		exit(127);
 	}
 }
@@ -45,9 +48,13 @@ static void	update_pipeline(t_pipeline *pipeline, int is_last)
 {
 	close(pipeline->input_fd);
 	close(pipeline->pipe_fd[1]);
-	pipeline->input_fd = pipeline->pipe_fd[0];
 	if (is_last)
+	{
 		close(pipeline->pipe_fd[0]);
+		close(pipeline->output_fd);
+	}
+	else
+		pipeline->input_fd = pipeline->pipe_fd[0];
 }
 
 int	pipeline(int in_fd, int out_fd, char ***commands, char **env)
@@ -68,7 +75,7 @@ int	pipeline(int in_fd, int out_fd, char ***commands, char **env)
 		if (pid == -1)
 			ft_error("fork", commands);
 		if (pid == 0)
-			execute_command(pipeline, commands[i], env, !commands[i + 1]);
+			execute_command(pipeline, commands, env, i);
 		update_pipeline(&pipeline, commands[i + 1] == NULL);
 		i++;
 	}
