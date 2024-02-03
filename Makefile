@@ -6,12 +6,12 @@
 #    By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/01 17:19:21 by obenchkr          #+#    #+#              #
-#    Updated: 2024/02/01 17:19:22 by obenchkr         ###   ########.fr        #
+#    Updated: 2024/02/02 23:49:31 by obenchkr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC				=	gcc
-CFLAGS			=	-Wall -Werror -Wextra -Iinclude -Ilibft
+CFLAGS			=	-Wall -Werror -Wextra -Iinclude -Ilibft -g -fsanitize=address
 CLIBS			=	-Llibft -lft
 NAME			=	pipex
 BONUS_NAME		=	pipex_bonus
@@ -48,4 +48,5 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re bonus
+
 .SECONDARY: $(OBJ) $(BONUS_OBJ)

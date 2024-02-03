@@ -6,11 +6,13 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 11:30:17 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/01/22 12:56:05 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/02/03 01:47:59 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
+#include <stdarg.h>
+#include <libft.h>
 
 void	ft_dprintf(int fd, const char *format, ...)
 {

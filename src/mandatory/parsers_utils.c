@@ -6,20 +6,23 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 10:57:43 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/01/22 12:40:22 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/02/03 01:16:56 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+#include <libft.h>
 
-char	*get_command_executable(char *cmd, char **env)
+char	*get_cmd_exec(char *cmd, char **env)
 {
 	char	**env_path;
 	char	*result;
 	char	*slash_cmd;
 	int		i;
 
-	if (ft_strncmp(cmd, "./", 2) == 0 || !!ft_strchr(cmd, '/'))
+	if (!cmd)
+		cmd = "";
+	if (ft_strncmp(cmd, "./", 2) == 0 || ft_strchr(cmd, '/'))
 		return (ft_strdup(cmd));
 	result = NULL;
 	env_path = parse_env_path(env);
@@ -27,16 +30,15 @@ char	*get_command_executable(char *cmd, char **env)
 	i = 0;
 	while (env_path && env_path[i])
 	{
-		result = ft_strjoin(env_path[i++], slash_cmd);
-		if (access(result, F_OK) == 0)
+		result = ft_strjoin(env_path[i], slash_cmd);
+		if (access(result, F_OK) == 0 || !env_path[i + 1])
 			break ;
 		free(result);
 		result = NULL;
+		i++;
 	}
 	free(slash_cmd);
 	free_2d_tab(env_path);
-	if (!result)
-		return (ft_strdup(cmd));
 	return (result);
 }
 

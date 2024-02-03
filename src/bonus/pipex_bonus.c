@@ -6,29 +6,22 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 10:52:41 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/01/30 22:01:31 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/02/03 02:00:47 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
-
-void	cleanup_exit(char ***commands)
-{
-	int	error_number;
-
-	error_number = errno;
-	free_3d_tab(commands);
-	exit(error_number);
-}
+#include <unistd.h>
+#include <libft.h>
 
 int	main(int ac, char **av, char **env)
 {
-	int		in_fd;
-	int		out_fd;
-	char	***commands;
-	int		exit_status;
+	int			in_fd;
+	int			out_fd;
+	t_command	**commands;
+	int			exit_status;
 
-	check_errors(ac, av);
+	check_errors(av, ac);
 	if (ft_strncmp(av[1], "here_doc", 9) == 0)
 	{
 		commands = parse_commands(ac - 1, &av[1], env);
@@ -43,11 +36,8 @@ int	main(int ac, char **av, char **env)
 		check_fd(in_fd, av[1]);
 		out_fd = open(av[ac - 1], O_TRUNC | O_WRONLY | O_CREAT, 0644);
 	}
-	if (check_fd(out_fd, av[ac - 1]) == -1)
-		cleanup_exit(commands);
+	check_fd(out_fd, av[ac - 1]);
 	exit_status = pipeline(in_fd, out_fd, commands, env);
-	while (wait(NULL) > 0)
-		;
-	free_3d_tab(commands);
+	cleanup_commands(commands);
 	return (exit_status);
 }
