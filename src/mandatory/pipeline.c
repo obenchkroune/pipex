@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 11:57:29 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/02/03 02:01:48 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/02/04 22:11:46 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	pipeline(int in_fd, int out_fd, t_command **commands, char **env)
 	i = 0;
 	while (commands && commands[i])
 	{
-		if (pipe(pipeline.pipe_fd) == -1)
+		if (commands[i + 1] && pipe(pipeline.pipe_fd) == -1)
 			ft_error(commands);
 		pid = fork();
 		if (pid == -1)
