@@ -21,6 +21,12 @@
 static void \
 	execute_command(t_pipeline pipeline, t_command **cmd, char **env, int i)
 {
+	if (access(cmd[i]->executable, F_OK) != 0)
+	{
+		ft_dprintf(2, "command not found: %s\n", cmd[i]->executable);
+		cleanup_commands(cmd);
+		exit(127);
+	}
 	if (pipeline.input_fd == -1 || pipeline.output_fd == -1)
 		exit(ENOENT);
 	if (!cmd[i + 1])
